@@ -42,8 +42,8 @@ class ImageCarousel {
   imageContext = require.context('./images', false, /\.(jpg|jpeg|png|gif)$/);
   bgImages = Array.from(this.imageContext.keys().map(this.imageContext));
   idx = 0;
-  autoplayInterval = null; 
-  
+  autoplayInterval = null;
+
   changeBg() {
     const image = document.querySelector('.image');
     image.style.background = `url(${this.bgImages[this.idx]})`;
@@ -85,13 +85,22 @@ class ImageCarousel {
     this.autoPlay();
   }
 
+  handleButtons(id) {
+    const mapping = { btn1: 0, btn2: 1, btn3: 2, btn4: 3 };
+    this.idx = mapping[id];
+    this.changeBg();
+    this.autoPlay();
+  }
+
   playCarousel() {
     this.autoPlay();
     const left = document.querySelector('.left');
     const right = document.querySelector('.right');
+    const bttns = document.querySelector('.bttns');
 
     left.addEventListener('click', () => this.goToPrev());
     right.addEventListener('click', () => this.goToNext());
+    bttns.addEventListener('click', (e) => this.handleButtons(e.target.id));
   }
 }
 
